@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vehicle Service</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #0f172a, #4c1d95, #0f172a);
+      color: white;
+    }
+   
+      /* Header */
+    .header { border-bottom: 1px solid var(--card-border); backdrop-filter: blur(6px); position: sticky; top: 0; z-index: 10; background: linear-gradient(135deg, rgba(30,41,59,.75), rgba(107,33,168,.35)); }
+    .header-wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    .back-link { color: #d1d5db; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .back-link:hover { color: #fff; }
+    .title { font-size: 20px; font-weight: 800; margin: 0; }
+    .subtitle { margin: 4px 0 0; font-size: 14px; color: #cbd5e1; }
+     .btn {
+      background: linear-gradient(to right, #06b6d4, #9333ea);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    h1 span {
+      background: linear-gradient(to right, #22d3ee, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .search-box {
+      position: relative;
+      margin: 2rem auto;
+      max-width: 500px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      padding-left: 2.8rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 1rem;
+    }
+    .search-box input::placeholder {
+      color: #aaa;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    @media(min-width:768px) {
+      .stats {
+        grid-template-columns: repeat(4,1fr);
+      }
+    }
+    .stats div {
+      text-align: center;
+    }
+    .stats .num {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media(min-width:768px) {
+      .card-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+    }
+    @media(min-width:1024px) {
+      .card-grid {
+        grid-template-columns: repeat(3,1fr);
+      }
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.04);
+      background: rgba(255,255,255,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-content {
+      padding: 1.2rem;
+    }
+    .card-content h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .badge {
+      background: rgba(34,197,94,0.2);
+      border: 1px solid rgba(34,197,94,0.3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.3rem;
+      font-size: 0.8rem;
+      color: #4ade80;
+      margin-left: 0.5rem;
+    }
+    .services-list {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 0.4rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .services-list div::before {
+      content: "•";
+      color: #22d3ee;
+      margin-right: 0.5rem;
+    }
+    .card-buttons {
+      display: flex;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .why {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .why-grid {
+      display: grid;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media(min-width:768px) {
+      .why-grid {
+        grid-template-columns: repeat(3,1fr);
+      }
+    }
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+   <!-- Header -->
+  <header class="header">
+    <div class="container header-wrap">
+      <div class="header-left">
+        <a class="back-link" href="file:///C:/Users/choud/OneDrive/Desktop/main_project/main/dashboard/user/index.html" aria-label="Back to Home">⬅️ <span>Back to Home</span></a>
+        <div>
+          <h1 class="title">Commercial Services</h1>
+          <p class="subtitle">Professional commercial service solutions</p>
+        </div>
+      </div>
+      <a href="login.html" class="btn btn-gradient">Book Service</a>
+    </div>
+  </header>
+
+
+  <div class="container">
+    <h1 style="font-size:2.5rem;font-weight:bold;text-align:center;margin:0;">
+      Vehicle <span>Services</span>
+    </h1>
+    <p style="text-align:center;color:#ccc;max-width:700px;margin:1rem auto 2rem;">
+      Complete care for your vehicle – repair, service, and emergency help from trusted experts.
+    </p>
+
+    <div class="search-box">
+      <input type="text" placeholder="Search services... (Car, Bike, Towing, etc.)"/>
+    </div>
+
+    <div class="stats">
+      <div><div class="num">500+</div><div>Certified Mechanics</div></div>
+      <div><div class="num">24/7</div><div>Emergency Service</div></div>
+      <div><div class="num">90 Days</div><div>Service Warranty</div></div>
+      <div><div class="num">4.8★</div><div>Customer Rating</div></div>
+    </div>
+
+    <!-- Services -->
+    <div class="card-grid">
+      <!-- Car Repair -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=Car+Repair" alt="Car Repair"/>
+        <div class="card-content">
+          <h3>Car Repair <span class="badge">Starting from $99</span></h3>
+          <p>Comprehensive car repair and maintenance services</p>
+          <p>⭐ 4.9 (1283 reviews)</p>
+          <div class="services-list">
+            <div>Engine repair</div><div>Brake service</div>
+            <div>AC service</div><div>Oil change</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bike Service -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=Bike+Service" alt="Bike Service"/>
+        <div class="card-content">
+          <h3>Bike Service <span class="badge">Starting from $49</span></h3>
+          <p>Two-wheeler maintenance, repair, and inspection</p>
+          <p>⭐ 4.8 (984 reviews)</p>
+          <div class="services-list">
+            <div>Chain lubrication</div><div>Brake tuning</div>
+            <div>Battery check</div><div>Engine tuning</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Towing Service -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=Towing+Service" alt="Towing Service"/>
+        <div class="card-content">
+          <h3>Towing Service <span class="badge">Starting from $79</span></h3>
+          <p>24/7 towing for all vehicles and breakdowns</p>
+          <p>⭐ 4.7 (1132 reviews)</p>
+          <div class="services-list">
+            <div>Emergency towing</div><div>Flatbed towing</div>
+            <div>Long-distance</div><div>Local recovery</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- On-Road Assistance -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=On-Road+Assistance" alt="On-Road Assistance"/>
+        <div class="card-content">
+          <h3>On-Road Assistance <span class="badge">Starting from $59</span></h3>
+          <p>Stuck on the road? We’ll get you moving again.</p>
+          <p>⭐ 4.6 (743 reviews)</p>
+          <div class="services-list">
+            <div>Flat tire fix</div><div>Fuel delivery</div>
+            <div>Minor repairs</div><div>Lockout service</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Battery Jumpstart -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=Jumpstart+Service" alt="Battery Jumpstart"/>
+        <div class="card-content">
+          <h3>Battery Jumpstart <span class="badge">Starting from $39</span></h3>
+          <p>Dead battery? Quick and safe jumpstart anywhere.</p>
+          <p>⭐ 4.5 (456 reviews)</p>
+          <div class="services-list">
+            <div>Jumpstart</div><div>Battery test</div>
+            <div>Battery replacement</div><div>Terminal cleaning</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Engine Diagnostics -->
+      <div class="card">
+        <img src="/placeholder.svg?height=200&width=300&text=Diagnostics" alt="Engine Diagnostics"/>
+        <div class="card-content">
+          <h3>Engine Diagnostics <span class="badge">Starting from $65</span></h3>
+          <p>Advanced computer diagnostics for all vehicles</p>
+          <p>⭐ 4.4 (321 reviews)</p>
+          <div class="services-list">
+            <div>OBD scans</div><div>Error code analysis</div>
+            <div>Performance checks</div><div>Sensor check</div>
+          </div>
+          <div class="card-buttons">
+            <button class="btn">Book Now</button>
+            <button class="btn-outline">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why choose -->
+    <section class="why">
+      <h2 style="font-size:2rem;font-weight:bold;">Why Choose Our Vehicle Services?</h2>
+      <p style="color:#ccc;">Trusted experts, fast support, and peace of mind on the road</p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <h3>Certified Mechanics</h3>
+          <p>Experienced professionals ready to handle your vehicle issues</p>
+        </div>
+        <div class="why-card">
+          <h3>Quick Response</h3>
+          <p>We aim for same-day service and rapid roadside assistance</p>
+        </div>
+        <div class="why-card">
+          <h3>Service Guarantee</h3>
+          <p>Enjoy peace of mind with our 90-day post-service warranty</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

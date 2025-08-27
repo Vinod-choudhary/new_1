@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Contact Support</title>
+  <style>
+    :root{
+      --bg-from:#0f172a; /* slate-900 */
+      --bg-via:#6b21a8;  /* purple-900-ish */
+      --text:#ffffff;
+      --muted:#d1d5db;   /* gray-300 */
+      --muted-2:#9ca3af; /* gray-400 */
+      --glass:rgba(255,255,255,.05);
+      --glass-border:rgba(255,255,255,.10);
+      --input-bg:rgba(255,255,255,.10);
+      --input-border:rgba(255,255,255,.20);
+      --cyan-400:#22d3ee;
+      --purple-400:#a78bfa;
+      --cyan-500:#06b6d4;
+      --cyan-600:#0891b2;
+      --purple-500:#a855f7;
+      --purple-600:#9333ea;
+      --green-400:#34d399;
+      --emerald-400:#34d399;
+      --blue-400:#60a5fa;
+      --orange-400:#fb923c;
+      --red-400:#f87171;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:linear-gradient(135deg,var(--bg-from),var(--bg-via),var(--bg-from));
+      color:var(--text);
+    }
+
+    /* Layout helpers */
+    .container{
+      width:100%;
+      margin:0 auto;
+      padding:0 1rem;
+      max-width:1200px;
+    }
+    header{
+      position:sticky; top:0; backdrop-filter:blur(8px);
+      background:linear-gradient(135deg,rgba(15,23,42,.35),rgba(107,33,168,.2));
+      border-bottom:1px solid var(--glass-border);
+      z-index:10;
+    }
+    .header-row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 0;
+    }
+    .back-link{
+      color:#cbd5e1; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    }
+    .back-link:hover{ color:#fff; }
+    .page-title{ margin:0; font-weight:800; font-size:1.25rem; }
+    .page-sub{ margin:.125rem 0 0; color:var(--muted); font-size:.9rem; }
+
+    main{ padding:2rem 0; }
+    .hero{ text-align:center; margin-bottom:3rem; }
+    .hero h1{ margin:0 0 1rem; font-weight:800; line-height:1.1; }
+    .hero p{ color:var(--muted); margin:0 auto; max-width:48rem; font-size:1.125rem; }
+    .text-gradient{
+      background:linear-gradient(90deg,var(--cyan-400),var(--purple-400));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid; gap:2rem;
+    }
+    @media (min-width:1024px){
+      .grid-lg-3{ grid-template-columns: 1fr 1fr 1fr; }
+      .span-2{ grid-column: span 2; }
+    }
+
+    /* Card */
+    .card{
+      background:var(--glass);
+      border:1px solid var(--glass-border);
+      border-radius:16px;
+      backdrop-filter: blur(8px);
+      overflow:hidden;
+    }
+    .card-header{ padding:1.25rem 1.25rem 0; }
+    .card-title{ margin:0; font-weight:700; font-size:1.125rem; display:flex; align-items:center; gap:.5rem;}
+    .card-desc{ margin:.5rem 0 0; color:var(--muted); }
+    .card-content{ padding:1.25rem; }
+    .card-content.p-6{ padding:1.5rem; }
+
+    /* Contact method rows */
+    .row{
+      display:flex; align-items:center; gap:.75rem; padding:.75rem;
+      background:rgba(255,255,255,.06); border-radius:12px;
+    }
+    .icon-tile{
+      width:40px; height:40px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      color:white;
+    }
+
+    /* Inputs */
+    .field{ display:flex; flex-direction:column; gap:.5rem; }
+    label{ color:var(--text); font-size:.95rem; }
+    input[type="text"],input[type="email"],input[type="tel"],select,textarea{
+      width:100%; border-radius:12px; padding:.75rem .9rem;
+      border:1px solid var(--input-border); background:var(--input-bg);
+      color:var(--text); outline:none; font-size:1rem;
+    }
+    input::placeholder, textarea::placeholder{ color:#94a3b8; }
+    textarea{ min-height:120px; resize:vertical; }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      padding:.8rem 1rem; border-radius:12px; border:1px solid transparent;
+      font-weight:600; cursor:pointer; text-decoration:none;
+    }
+    .btn-primary{
+      width:100%;
+      background:linear-gradient(90deg,var(--cyan-500),var(--purple-500));
+      color:#fff;
+    }
+    .btn-primary:hover{
+      background:linear-gradient(90deg,var(--cyan-600),var(--purple-600));
+    }
+    .btn-outline{
+      width:100%;
+      background:transparent; color:#fff; border-color:var(--input-border);
+    }
+    .btn-outline:hover{ background:rgba(255,255,255,.08); }
+
+    .btn-chip{
+      width:100%;
+      justify-content:flex-start;
+      border:1px solid transparent;
+    }
+    .btn-green{ background:rgba(16,185,129,.15); color:#34d399; border-color:rgba(16,185,129,.3); }
+    .btn-green:hover{ background:rgba(16,185,129,.25); }
+    .btn-blue{ background:rgba(59,130,246,.15); color:#60a5fa; border-color:rgba(59,130,246,.3); }
+    .btn-blue:hover{ background:rgba(59,130,246,.25); }
+    .btn-purple{ background:rgba(168,85,247,.15); color:#c084fc; border-color:rgba(168,85,247,.3); }
+    .btn-purple:hover{ background:rgba(168,85,247,.25); }
+
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+
+    /* Stacked on small, row on sm+ */
+    .actions{
+      display:flex; flex-direction:column; gap:1rem;
+    }
+    @media (min-width:640px){
+      .actions{ flex-direction:row; }
+      .actions .btn{ flex:1; }
+    }
+
+    /* Success screen */
+    .center-screen{
+      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1rem;
+      background:linear-gradient(135deg,var(--bg-from),var(--bg-via),var(--bg-from));
+    }
+    .success-badge{
+      width:64px; height:64px; border-radius:9999px; margin:0 auto 1.5rem;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(90deg,#4ade80,#34d399);
+      color:#fff;
+    }
+    .text-center{ text-align:center; }
+    .text-muted{ color:var(--muted); }
+    .mt-2{ margin-top:.5rem; }
+    .mt-3{ margin-top:.75rem; }
+    .mt-4{ margin-top:1rem; }
+    .mt-6{ margin-top:1.5rem; }
+    .mb-4{ margin-bottom:1rem; }
+    .mb-6{ margin-bottom:1.5rem; }
+
+    /* Headings scale responsive */
+    .h1{
+      font-size:2.25rem; /* ~text-4xl */
+    }
+    @media (min-width:768px){
+      .h1{ font-size:3rem; } /* ~text-5xl */
+    }
+
+    /* Utility colors */
+    .text-white{ color:#fff; }
+    .text-green{ color:#34d399; font-weight:600; }
+
+    /* Link */
+    a.link{ color:var(--cyan-400); text-decoration:none; }
+    a.link:hover{ color:#67e8f9; }
+
+    /* Spacing */
+    .space-y-4 > * + *{ margin-top:1rem; }
+    .space-y-3 > * + *{ margin-top:.75rem; }
+    .space-y-6 > * + *{ margin-top:1.5rem; }
+    .mt-16{ margin-top:4rem; }
+  </style>
+</head>
+<body>
+
+  <!-- SUBMITTED SCREEN (hidden by default) -->
+  <div id="submittedScreen" class="center-screen" style="display:none;">
+    <div class="card" style="max-width:32rem; width:100%;">
+      <div class="card-content text-center" style="padding:2rem;">
+        <div class="success-badge" aria-hidden="true">
+          <!-- CheckCircle -->
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <path d="M22 4 12 14.01l-3-3"></path>
+          </svg>
+        </div>
+        <h2 class="h2" style="font-size:1.5rem; font-weight:800; margin:0 0 1rem;">Message Sent!</h2>
+        <p class="text-muted mb-6">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+        <div class="space-y-3">
+          <a href="/" class="btn btn-primary">Back to Home</a>
+          <button id="sendAnotherBtn" class="btn btn-outline">Send Another Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app">
+    <!-- Header -->
+    <header>
+      <div class="container header-row">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <a href="C:\Users\choud\OneDrive\Desktop\main_project\main\dashboard\user\index.html" class="back-link">
+            <!-- ArrowLeft -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5"></path>
+              <path d="m12 19-7-7 7-7"></path>
+            </svg>
+            Back to Home
+          </a>
+          <div>
+            <h1 class="page-title">Contact Support</h1>
+            <p class="page-sub">Get help with your service needs</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+          <h1 class="h1">
+            We're Here to
+            <span class="text-gradient"> Help You</span>
+          </h1>
+          <p>Have questions about our services? Need technical support? Our team is ready to assist you 24/7.</p>
+        </section>
+
+        <div class="grid grid-lg-3">
+          <!-- LEFT COLUMN -->
+          <div class="space-y-6">
+            <!-- Get in Touch -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Get in Touch</h3>
+                <p class="card-desc">Multiple ways to reach our support team</p>
+              </div>
+              <div class="card-content space-y-4">
+                <div class="row">
+                  <div class="icon-tile" style="background:linear-gradient(90deg,#4ade80,#34d399);">
+                    <!-- Phone -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.06 2h2a2 2 0 0 1 2 1.72c.12.9.33 1.77.62 2.61a2 2 0 0 1-.45 2.11L7.1 9.9a16 16 0 0 0 6 6l1.46-1.13a2 2 0 0 1 2.11-.45c.84.29 1.71.5 2.61.62A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style="margin:0; font-weight:600;">Phone Support</p>
+                    <p class="text-muted" style="margin:.125rem 0;">1-800-SERVICE</p>
+                    <p class="text-muted" style="margin:0; font-size:.85rem;">24/7 Emergency Line</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="icon-tile" style="background:linear-gradient(90deg,#60a5fa,#22d3ee);">
+                    <!-- Mail -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m22 7-10 6L2 7"></path>
+                      <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style="margin:0; font-weight:600;">Email Support</p>
+                    <p class="text-muted" style="margin:.125rem 0;">support@servicefuture.com</p>
+                    <p class="text-muted" style="margin:0; font-size:.85rem;">Response within 2 hours</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="icon-tile" style="background:linear-gradient(90deg,#c084fc,#f472b6);">
+                    <!-- MessageSquare -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V5a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style="margin:0; font-weight:600;">Live Chat</p>
+                    <p class="text-muted" style="margin:.125rem 0;">Available on website</p>
+                    <p class="text-muted" style="margin:0; font-size:.85rem;">Instant responses</p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="icon-tile" style="background:linear-gradient(90deg,#fb923c,#f87171);">
+                    <!-- MapPin -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0 1 18 0Z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <p style="margin:0; font-weight:600;">Office Location</p>
+                    <p class="text-muted" style="margin:.125rem 0;">123 Tech Street</p>
+                    <p class="text-muted" style="margin:0; font-size:.85rem;">San Francisco, CA 94105</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <!-- Clock -->
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                  Business Hours
+                </h3>
+              </div>
+              <div class="card-content space-y-3">
+                <div style="display:flex; justify-content:space-between;">
+                  <span class="text-muted">Monday - Friday</span>
+                  <span class="text-white">8:00 AM - 8:00 PM</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span class="text-muted">Saturday</span>
+                  <span class="text-white">9:00 AM - 6:00 PM</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span class="text-muted">Sunday</span>
+                  <span class="text-white">10:00 AM - 4:00 PM</span>
+                </div>
+                <div style="border-top:1px solid var(--glass-border);" class="pt-3 mt-3">
+                  <div style="display:flex; justify-content:space-between;">
+                    <span class="text-muted">Emergency Services</span>
+                    <span class="text-green">24/7 Available</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Quick Actions</h3>
+              </div>
+              <div class="card-content space-y-3">
+                <button class="btn btn-chip btn-green" type="button">
+                  <!-- Phone -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.06 2h2a2 2 0 0 1 2 1.72c.12.9.33 1.77.62 2.61a2 2 0 0 1-.45 2.11L7.1 9.9a16 16 0 0 0 6 6l1.46-1.13a2 2 0 0 1 2.11-.45c.84.29 1.71.5 2.61.62A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  Call Emergency Line
+                </button>
+                <button class="btn btn-chip btn-blue" type="button">
+                  <!-- MessageSquare -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V5a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+                  </svg>
+                  Start Live Chat
+                </button>
+                <button class="btn btn-chip btn-purple" type="button">
+                  <!-- Headphones -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"></path>
+                    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                  </svg>
+                  Schedule Callback
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN (FORM) -->
+          <div class="span-2">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title" style="font-size:1.25rem;">Send us a Message</h3>
+                <p class="card-desc">Fill out the form below and we'll get back to you as soon as possible</p>
+              </div>
+              <div class="card-content">
+                <form id="contactForm" class="space-y-6" novalidate>
+                  <!-- Row 1 -->
+                  <div class="grid" style="gap:1.5rem; grid-template-columns:1fr;">
+                    <div class="field">
+                      <label for="name">Full Name *</label>
+                      <input id="name" type="text" placeholder="Your full name" required />
+                    </div>
+                    <div class="field">
+                      <label for="email">Email Address *</label>
+                      <input id="email" type="email" placeholder="your.email@example.com" required />
+                    </div>
+                  </div>
+                  <!-- make them two columns on md+ -->
+                  <style>
+                    @media (min-width:768px){
+                      #row1{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+                      #row2{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+                      #row3{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+                    }
+                  </style>
+                  <div id="row1" style="display:grid; gap:1.5rem;">
+                    <div class="field">
+                      <label for="name_md">Full Name *</label>
+                      <input id="name_md" type="text" placeholder="Your full name" />
+                    </div>
+                    <div class="field">
+                      <label for="email_md">Email Address *</label>
+                      <input id="email_md" type="email" placeholder="your.email@example.com" />
+                    </div>
+                  </div>
+                  <!-- Use only single set of inputs (avoid duplicates visually on small) -->
+                  <script>
+                    // This block hides the md-only duplicates on small screens and syncs values bi-directionally.
+                    (function(){
+                      const small = {name:document.getElementById('name'), email:document.getElementById('email')};
+                      const md    = {name:document.getElementById('name_md'), email:document.getElementById('email_md')};
+                      const mq = window.matchMedia('(min-width:768px)');
+                      function sync(from,to){ to.value = from.value; }
+                      [small.name, small.email, md.name, md.email].forEach(el=>{
+                        el.addEventListener('input', ()=>{
+                          if(mq.matches){
+                            // md visible -> sync small from md
+                            sync(md.name, small.name); sync(md.email, small.email);
+                          }else{
+                            // small visible -> sync md from small
+                            sync(small.name, md.name); sync(small.email, md.email);
+                          }
+                          validateForm();
+                        });
+                      });
+                      function toggleDup(){
+                        const row1 = document.getElementById('row1');
+                        if(mq.matches){ // show md, hide small
+                          small.name.closest('.grid')?.setAttribute('style','display:none;');
+                          row1.style.display='grid';
+                        }else{
+                          small.name.closest('.grid')?.setAttribute('style','display:grid; gap:1.5rem; grid-template-columns:1fr;');
+                          row1.style.display='none';
+                        }
+                      }
+                      mq.addEventListener('change', toggleDup);
+                      toggleDup();
+                    })();
+                  </script>
+
+                  <!-- Row 2 -->
+                  <div class="grid" id="row2">
+                    <div class="field">
+                      <label for="phone">Phone Number</label>
+                      <input id="phone" type="tel" placeholder="+1 (555) 123-4567" />
+                    </div>
+                    <div class="field">
+                      <label for="category">Category *</label>
+                      <select id="category" required>
+                        <option value="" selected disabled hidden>Select category</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="service">Service Issue</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="partnership">Partnership</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="grid" id="row3">
+                    <div class="field">
+                      <label for="subject">Subject *</label>
+                      <input id="subject" type="text" placeholder="Brief description of your inquiry" required />
+                    </div>
+                    <div class="field">
+                      <label for="priority">Priority</label>
+                      <select id="priority">
+                        <option value="low">Low</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Message -->
+                  <div class="field">
+                    <label for="message">Message *</label>
+                    <textarea id="message" placeholder="Please provide detailed information about your inquiry..." required></textarea>
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="actions">
+                    <button id="sendBtn" type="submit" class="btn btn-primary">
+                      <!-- Send -->
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 2 11 13"></path>
+                        <path d="M22 2 15 22 11 13 2 9l20-7"></path>
+                      </svg>
+                      <span>Send Message</span>
+                    </button>
+                    <button id="clearBtn" type="button" class="btn btn-outline">Clear Form</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <section class="mt-16">
+          <div class="text-center mb-8">
+            <h2 style="font-size:1.875rem; margin:0 0 1rem; font-weight:800;">Frequently Asked Questions</h2>
+            <p class="text-muted" style="margin:0;">Quick answers to common questions</p>
+          </div>
+
+          <div class="grid" style="gap:1.5rem;" id="faqGrid">
+            <div class="card">
+              <div class="card-content p-6">
+                <h3 style="margin:0 0 .5rem; font-weight:800;">How quickly can I get service?</h3>
+                <p class="text-muted" style="margin:0;">
+                  We offer same-day service for urgent requests and typically schedule within 24-48 hours for regular
+                  services.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content p-6">
+                <h3 style="margin:0 0 .5rem; font-weight:800;">What areas do you serve?</h3>
+                <p class="text-muted" style="margin:0;">
+                  We currently serve the San Francisco Bay Area and surrounding cities within a 25-mile radius.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content p-6">
+                <h3 style="margin:0 0 .5rem; font-weight:800;">Are your technicians certified?</h3>
+                <p class="text-muted" style="margin:0;">
+                  Yes, all our technicians are certified professionals with background checks and insurance coverage.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content p-6">
+                <h3 style="margin:0 0 .5rem; font-weight:800;">What payment methods do you accept?</h3>
+                <p class="text-muted" style="margin:0;">
+                  We accept all major credit cards, digital wallets, and cash payments for completed services.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Elements
+    const app = document.getElementById('app');
+    const submittedScreen = document.getElementById('submittedScreen');
+    const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+
+    // Form fields
+    const form = document.getElementById('contactForm');
+    const nameInputSmall = document.getElementById('name');
+    const emailInputSmall = document.getElementById('email');
+    const nameInputMd = document.getElementById('name_md');
+    const emailInputMd = document.getElementById('email_md');
+    const phoneInput = document.getElementById('phone');
+    const categorySelect = document.getElementById('category');
+    const subjectInput = document.getElementById('subject');
+    const prioritySelect = document.getElementById('priority');
+    const messageInput = document.getElementById('message');
+    const sendBtn = document.getElementById('sendBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    let isSubmitting = false;
+
+    // Helper: current inputs (depending on viewport)
+    function currentNameInput(){
+      return window.matchMedia('(min-width:768px)').matches ? nameInputMd : nameInputSmall;
+    }
+    function currentEmailInput(){
+      return window.matchMedia('(min-width:768px)').matches ? emailInputMd : emailInputSmall;
+    }
+
+    // Validation logic replicating original conditions:
+    // disabled if isSubmitting || !name || !email || !category || !subject || !message
+    function validateForm(){
+      const nameVal = currentNameInput().value.trim();
+      const emailVal = currentEmailInput().value.trim();
+      const categoryVal = categorySelect.value;
+      const subjectVal = subjectInput.value.trim();
+      const messageVal = messageInput.value.trim();
+
+      const shouldDisable = isSubmitting ||
+        !nameVal || !emailVal || !categoryVal || !subjectVal || !messageVal;
+
+      sendBtn.disabled = shouldDisable;
+      sendBtn.querySelector('span').textContent = isSubmitting ? 'Sending...' : 'Send Message';
+    }
+
+    // Attach listeners to all inputs
+    [nameInputSmall, emailInputSmall, nameInputMd, emailInputMd,
+     phoneInput, categorySelect, subjectInput, prioritySelect, messageInput]
+    .forEach(el => el.addEventListener('input', validateForm));
+
+    // Clear form to initial state
+    function clearForm(){
+      nameInputSmall.value = '';
+      emailInputSmall.value = '';
+      nameInputMd.value = '';
+      emailInputMd.value = '';
+      phoneInput.value = '';
+      categorySelect.selectedIndex = 0;
+      subjectInput.value = '';
+      prioritySelect.value = 'normal';
+      messageInput.value = '';
+      validateForm();
+    }
+    clearBtn.addEventListener('click', clearForm);
+
+    // Submit simulation (2s) then show success screen
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      isSubmitting = true;
+      validateForm();
+
+      setTimeout(()=>{
+        isSubmitting = false;
+        // Show submitted screen
+        app.style.display = 'none';
+        submittedScreen.style.display = 'flex';
+      }, 2000);
+    });
+
+    // Send Another Message -> return to form and reset
+    if (sendAnotherBtn){
+      sendAnotherBtn.addEventListener('click', ()=>{
+        clearForm();
+        app.style.display = '';
+        submittedScreen.style.display = 'none';
+      });
+    }
+
+    // Initial validation state
+    validateForm();
+  </script>
+</body>
+</html>

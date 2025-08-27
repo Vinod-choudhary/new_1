@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Portal</title>
+    <style>
+        /* CSS Styles */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            background: linear-gradient(to bottom right, #0f172a, #6b21a8, #0f172a);
+        }
+
+         header {
+      position: sticky;
+      top: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      z-index: 50;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: linear-gradient(to right, #22d3ee, #a855f7);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-link {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.2s;
+      font-weight: 500;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+    }
+    .nav-link:hover {
+      color: white;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #06b6d4, #9333ea);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            padding: 80px 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(6, 182, 212, 0.1), rgba(168, 85, 247, 0.1));
+            animation: pulse 3s infinite;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: #e2e8f0;
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 48px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            color: white;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-button:hover {
+            background: linear-gradient(to right, #0ea5e9, #9333ea);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .primary-button {
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .primary-button:hover {
+            background: linear-gradient(to right, #0ea5e9, #9333ea);
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: #e2e8f0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 32px;
+        }
+
+        .icon-blue {
+            background: linear-gradient(to right, #3b82f6, #06b6d4);
+        }
+
+        .icon-green {
+            background: linear-gradient(to right, #10b981, #22c55e);
+        }
+
+        .icon-purple {
+            background: linear-gradient(to right, #8b5cf6, #d946ef);
+        }
+
+        .icon-orange {
+            background: linear-gradient(to right, #f59e0b, #ef4444);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            color: #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .card-button {
+            background: transparent;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Spotlight Section */
+        .spotlight-section {
+            padding: 80px 0;
+        }
+
+        .spotlight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .spotlight-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            object-fit: cover;
+        }
+
+        .spotlight-rating {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .star-icon {
+            color: #fbbf24;
+            fill: currentColor;
+        }
+
+        .spotlight-comment {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #e2e8f0;
+            margin-bottom: 24px;
+        }
+
+        .spotlight-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .spotlight-role {
+            color: #94a3b8;
+        }
+
+        .spotlight-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+
+        .navigation-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .navigation-dot.active {
+            background: #22d3ee;
+            transform: scale(1.2);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.125rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .spotlight-card {
+                padding: 32px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .primary-button, .secondary-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+      <!-- Header -->
+  <header>
+  <header id="heder">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <!-- SVG icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3c0 1.05.36 2.06 1 2.83 1.34 1.25 2 3 2 5.08V18m0-10a3 3 0 0 1 6 0c0 1.05-.36 2.06-1 2.83-1.34 1.25-2 3-2 5.08V18"></path>
+            <path d="M19 4v2m0 12v2M1 4v2m18 12v2"></path>
+          </svg>
+        </div>
+        <span class="logo-text">ServiceFuture</span>
+      </div>
+      <nav>
+        <li><a href="about.html" style="color:#d1d5db;text-decoration:none;">About Us</a></li>
+        <a href="#services" class="nav-link">Services</a>      
+        <div>
+        <button class="btn btn-primary"> <a href="file:///c:/Users/choud/OneDrive/Desktop/main_project/main/regiter/login.html">Sign In</a></button>
+      </div>
+    </div>
+  </header>
+
+    <div class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background"></div>
+            <div class="container">
+                <div class="badge">
+                    <span>👨‍🔧 Technician Portal</span>
+                </div>
+                <h1 class="hero-title">Your Work, <span class="highlight">Simplified</span></h1>
+                <p class="hero-description">
+                    Access your job assignments, history, resources, and tools in one place. Stay connected, stay productive.
+                </p>
+                
+                <div class="search-container">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" placeholder="Search jobs, schedules, documents...">
+                    <button class="search-button">Search</button>
+                </div>
+
+<style>
+  .button-group {
+    display: flex;
+    gap: 12px;
+  }
+
+  .button-group button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .primary-button {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .primary-button:hover {
+    background-color: #0056b3;
+  }
+
+  .secondary-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #ccc;
+  }
+
+  .secondary-button:hover {
+    background-color: #ddd;
+  }
+</style>
+            </div>
+        </section>
+
+         <div class="button-group">
+  <!-- Dashboard Button -->
+  <button class="primary-button" onclick="window.location.href='C:/Users/choud/OneDrive/Desktop/main_project/index.html'">
+    Go to Dashboard <span>→</span>
+  </button>
+
+  <!-- Support Button -->
+  <button class="secondary-button" onclick="window.location.href='tel:1800-TECHHELP'">
+    <span>📞</span> Support: 1-800-TECHHELP
+  </button>
+</div>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <section id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Technician Tools</h2>
+                    <p class="section-description">
+                        Your control center to manage tasks, access help, and optimize your workflow.
+                    </p>
+                </div>
+                
+                <div class="features-grid">
+                    <!-- Assigned Jobs Card -->
+                    <div class="feature-card">
+                        <div class="feature-icon icon-blue">
+                            📋
+                        </div>
+                        <h3 class="feature-title">Assigned Jobs</h3>
+                        <p class="feature-description">
+                            View and manage your current job assignments
+                        </p>
+                        <button class="card-button" onclick="window.location.href='assigned-jobs.html'">
+                            Open Tool
+                            <span>→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Job History Card -->
+                    <div class="feature-card">
+                        <div class="feature-icon icon-green">
+                            ✅
+                        </div>
+                        <h3 class="feature-title">Job History</h3>
+                        <p class="feature-description">
+                            Track completed services and performance
+                        </p>
+                        <button class="card-button" onclick="window.location.href='job-history.html'">
+                            Open Tool
+                            <span>→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Schedule Card -->
+                    <div class="feature-card">
+                        <div class="feature-icon icon-purple">
+                            ⏰
+                        </div>
+                        <h3 class="feature-title">Schedule</h3>
+                        <p class="feature-description">
+                            Manage availability and time slots
+                        </p>
+                        <button class="card-button" onclick="window.location.href='schedule.html'">
+                            Open Tool
+                            <span>→</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Tools & Resources Card -->
+                    <div class="feature-card">
+                        <div class="feature-icon icon-orange">
+                            🔧
+                        </div>
+                        <h3 class="feature-title">Tools & Resources</h3>
+                        <p class="feature-description">
+                            Access technical documentation and support
+                        </p>
+                        <button class="card-button" onclick="window.location.href='tools-resources.html'">
+                            Open Tool
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spotlight Section -->
+        <section  class="spotlight-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Technician Spotlights</h2>
+                    <p class="section-description">
+                        Real stories from top performers
+                    </p>
+                </div>
+                
+                <div class="spotlight-card">
+                    <img src="https://placehold.co/80x80" alt="Rajesh Kumar - Electrical Technician" class="spotlight-avatar">
+                    
+                    <div class="spotlight-rating">
+                        <span class="star-icon">★</span>
+                        <span class="star-icon">★</span>
+                        <span class="star-icon">★</span>
+                        <span class="star-icon">★</span>
+                        <span class="star-icon">★</span>
+                    </div>
+                    
+                    <p class="spotlight-comment">
+                        "ServiceFuture helped me grow my client base and work flexibly."
+                    </p>
+                    
+                    <div class="spotlight-name">Rajesh Kumar</div>
+                    <div class="spotlight-role">Electrical Technician</div>
+                </div>
+                
+                <div class="spotlight-navigation">
+                    <div class="navigation-dot active"></div>
+                    <div class="navigation-dot"></div>
+                    <div class="navigation-dot"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

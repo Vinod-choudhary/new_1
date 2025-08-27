@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceFuture Signup</title>
+    <style>
+        /* CSS Styles */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom right, #1e293b, #6b5b9a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 32px 32px 24px;
+            text-align: center;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 16px;
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 8px;
+        }
+
+        .card-description {
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .card-content {
+            padding: 0 32px 32px;
+        }
+
+        .tabs-container {
+            margin-bottom: 24px;
+        }
+
+        .tabs-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .tab-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 6px;
+        }
+
+        .tab-trigger.active {
+            background: linear-gradient(to right, #06b6d4, #8b5cf6);
+        }
+
+        .tab-trigger svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .input-field::placeholder {
+            color: #9ca3af;
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .toggle-password-btn:hover {
+            color: white;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .terms-checkbox input {
+            margin-right: 8px;
+        }
+
+        .terms-label {
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        .terms-link {
+            color: #22d3ee;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .terms-link:hover {
+            color: #67e8f9;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #22d3ee, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 16px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #0ea5e9, #9333ea);
+        }
+
+        .submit-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .signup-prompt {
+            text-align: center;
+            margin-top: 24px;
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .signup-link {
+            color: #22d3ee;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .signup-link:hover {
+            color: #67e8f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card-header">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 2L3 14h8l-2 8l10-12h-8l2-8z"/>
+                </svg>
+            </div>
+            <h1 class="card-title">Create Account</h1>
+            <p class="card-description">Join ServiceFuture today</p>
+        </div>
+        <div class="card-content">
+            <div class="tabs-container">
+                <div class="tabs-list" id="tabsList">
+                    <button class="tab-trigger active" id="customerTab">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        Customer
+                    </button>
+                    <button class="tab-trigger" id="technicianTab">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="11" r="1"/>
+                            <circle cx="12" cy="11" r="1"/>
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="7" cy="7" r="4"/>
+                        </svg>
+                        Technician
+                    </button>
+                </div>
+            </div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" id="firstName" class="input-field" placeholder="John" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" class="input-field" placeholder="Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="input-field" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" class="input-field" placeholder="+1 (555) 123-4567" required>
+                </div>
+                <div class="form-group" id="specializationGroup" style="display: none;">
+                    <label for="specialization" class="form-label">Specialization</label>
+                    <select id="specialization" class="input-field">
+                        <option value="" disabled selected>Select your specialization</option>
+                        <option value="appliances">Home Appliances</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="automotive">Automotive</option>
+                        <option value="cleaning">Cleaning Services</option>
+                        <option value="hvac">HVAC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" class="input-field" placeholder="Create a strong password" required>
+                        <button type="button" class="toggle-password-btn" id="togglePasswordBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms" class="terms-label">
+                        I agree to the <a href="/terms" class="terms-link">Terms of Service</a> and <a href="/privacy" class="terms-link">Privacy Policy</a>
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Create Account</button>
+            </form>
+
+            <p class="signup-prompt">
+                Already have an account? <a href="C:\Users\choud\OneDrive\Desktop\main_project\main\regiter\login.html" class="signup-link">Sign in</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const customerTab = document.getElementById('customerTab');
+            const technicianTab = document.getElementById('technicianTab');
+            const specializationGroup = document.getElementById('specializationGroup');
+            const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            const signupForm = document.getElementById('signupForm');
+            let showPassword = false;
+            let isLoading = false;
+            let userType = 'customer';
+
+            // Tab switching functionality
+            customerTab.addEventListener('click', () => {
+                customerTab.classList.add('active');
+                technicianTab.classList.remove('active');
+                userType = 'customer';
+                specializationGroup.style.display = 'none';
+            });
+
+            technicianTab.addEventListener('click', () => {
+                technicianTab.classList.add('active');
+                customerTab.classList.remove('active');
+                userType = 'technician';
+                specializationGroup.style.display = 'block';
+            });
+
+            // Password toggle functionality
+            togglePasswordBtn.addEventListener('click', () => {
+                showPassword = !showPassword;
+                passwordInput.type = showPassword ? 'text' : 'password';
+                togglePasswordBtn.innerHTML = showPassword ? 
+                    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-0.82a3 3 0 11-4.24-4.24"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                    </svg>` : 
+                    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>`;
+            });
+
+            // Form submission
+            signupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (isLoading) return;
+                
+                isLoading = true;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Creating account...';
+                
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Redirect based on user type
+                if (userType === 'customer') {
+                    window.location.href = '/dashboard';
+                } else {
+                    window.location.href = '/employee/dashboard';
+                }
+                
+                isLoading = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+            });
+        });
+    </script>
+</body>
+</html>
